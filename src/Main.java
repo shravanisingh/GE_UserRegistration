@@ -17,5 +17,15 @@ public class Main {
         if (!email.matches(emailReg)) {
             System.out.println("Invalid email");
         }
+        String numReg = "^[1-9][0-9]{1,2} [6-9][0-9]{9}$";
+        String number = sc.next();
+        if (!number.matches(numReg)) {
+            System.out.println("Invalid Number");
+        }
+        String passwordReg = "[a-zA-Z0-9,.%&$#@!^*]{8,}$";
+        String password = sc.next();
+        if (!password.matches(passwordReg)) {
+            System.out.println("Invalid Password");
+        }
+        }
     }
-}
