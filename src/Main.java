@@ -12,5 +12,10 @@ public class Main {
         if (!lastName.matches(regUser)) {
             System.out.println("Invalid Last Name");
         }
+        String emailReg = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        String email = sc.next();
+        if (!email.matches(emailReg)) {
+            System.out.println("Invalid email");
         }
     }
+}
