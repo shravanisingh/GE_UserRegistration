@@ -25,7 +25,7 @@ public class Main {
         String passwordReg = "^(?=.*[A-Z])(?=.*\\d).{8,}$";
         String password = sc.next();
         if (!password.matches(passwordReg)) {
-            System.out.println("Invalid Password");
+            System.out.println("Invalid Password for 3 rules");
         }
     }
 }
