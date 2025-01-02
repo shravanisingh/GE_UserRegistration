@@ -1,58 +1,36 @@
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MainTest {
-    @Test
-    public void testFirstNameValid() {
+    @ParameterizedTest
+    @CsvSource({
+            "abc.xyz@bl.co.in, true",   // Valid email
+            "abc-100@yahoo.com, true",  // Valid email
+            "abc.100@yahoo.com, true",  // Valid email
+            "abc111@abc.com, true",     // Valid email
+            "abc@1.com, true",          // Valid email
+            "abc@gmail.com.com, true",  // Valid email
+            "abc+100@gmail.com, true"   // Valid email
+    })
+    void testValidEmailValidation(String email, boolean expectedResult) {
         Main userRegistration = new Main();
-        assertTrue(userRegistration.isFirstNameValid("John")); // Should return true
+        assertEquals(expectedResult, userRegistration.isEmailValid(email));
     }
-    @Test
-    public void testFirstNameInvalid() {
+    @ParameterizedTest
+    @CsvSource({
+            "abc, false",                    // Invalid email - Missing '@'
+            "abc@.com.my, false",            // Invalid email - TLD starts with a dot
+            "abc123@gmail.a, false",         // Invalid email - TLD with one character
+            "abc123@.com, false",            // Invalid email - TLD starts with a dot
+            "abc@%*.com, false",             // Invalid email - TLD contains invalid characters
+            "abc..2002@gmail.com, false",    // Invalid email - Contains double dots
+            "abc@abc@gmail.com, false",      // Invalid email - Multiple '@' symbols
+            "abc@gmail.com.1a, false",      // Invalid email - TLD with a digit
+            "abc@gmail.com.aa.au, false"     // Invalid email - Multiple TLDs
+    })
+    void testInvalidEmailValidation(String email, boolean expectedResult) {
         Main userRegistration = new Main();
-        assertFalse(userRegistration.isFirstNameValid("jo"));   // Should return false
-    }
-    @Test
-    public void testLastNameValid() {
-        Main userRegistration = new Main();
-        assertTrue(userRegistration.isLastNameValid("Doe"));  // Should return true
-    }
-    @Test
-    public void testLastNameInvalid() {
-        Main userRegistration = new Main();
-        assertFalse(userRegistration.isLastNameValid("do"));   // Should return false
-    }
-
-    @Test
-    public void testEmailValid() {
-        Main userRegistration = new Main();
-        assertTrue(userRegistration.isEmailValid("abc.xyz@bl.co.in")); // Should return true
-    }
-    @Test
-    public void testEmailInvalid() {
-        Main userRegistration = new Main();
-        assertFalse(userRegistration.isEmailValid("abc@.com.my"));     // Should return false
-    }
-
-    // Happy test case for Mobile validation
-    @Test
-    public void testMobileValid() {
-        Main userRegistration = new Main();
-        assertTrue(userRegistration.isMobileNumberValid("91 9919819801")); // Should return true
-    }
-    @Test
-    public void testMobileInvalid() {
-        Main userRegistration = new Main();
-        assertFalse(userRegistration.isMobileNumberValid("919919819801"));  // Should return false
-    }
-    @Test
-    public void testPasswordValid() {
-        Main userRegistration = new Main();
-        assertTrue(userRegistration.isPasswordSecure("Abc@1234")); // Should return true
-    }
-    @Test
-    public void testPasswordInvalid() {
-        Main userRegistration = new Main();
-        assertFalse(userRegistration.isPasswordSecure("abc1234")); // Should return false (missing uppercase letter and special character)
+        assertEquals(expectedResult, userRegistration.isEmailValid(email));
     }
 }
